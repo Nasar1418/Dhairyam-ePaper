@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+  <link rel="icon" href="title.png" type="image/x-icon">
+  <title>Dhairyam e-paper</title>
+  <style>
+    /* Your additional styles go here */
+    #selectionBox {
+      position: absolute;
+      border: 2px dashed red;
+      background-color: rgba(255, 0, 0, 0.2);
+      pointer-events: none;
+      z-index: 1000;
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div>
+      <img src="title.png" alt="Dhairyam Logo">
+    </div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="DHAIRYAM.pdf">Paper Page</a>
+      <!-- <a href="#" onclick="startClip()">Clip</a> -->
+    </nav>
+  </header>
+  <div class="moving-text" id="advertisment">
+    <span>FOR ADVERTISEMENT ON OUR DHAIRYAM TELUGU WEEKLY NEWSPAPER PLEASE CONTACT 6303747180 </span>
+  </div>
+  <iframe id="pdfViewer" src="DHAIRYAM.pdf" width="100%" height="100%" onload="initPdfViewer()"></iframe>
+
+  <div id="selectionBox"></div>
+
+  <footer style="text-align: center; background-color: #333; color: white; padding: 10px; height: 3rem;">
+    <p>Copyright (c) Dhairyam All Rights Reserved </p>
+    <p>PRINTER, PUBLISHER AND OWNED BY SHAIK.VALI SAHEB AND PRINTED AT GAYATRI PRINTERS, YERRAGONDA PALEM, PRAKASAM DT PIN
+      : 523327, (AP). EDITOR : SHAIK VALI SAHEB, MA, DJ. E-mail : dhairyamvarapatrika@gmail.com, Cell : 9701798030,
+      RNI REGD NO : APTEL/2007/27972. </p>
+  </footer>
+
+  <script>
+    const pdfViewer = document.getElementById('pdfViewer');
+    let currentPage = 1;
+    let selectionBox;
+    let selectionStartX, selectionStartY;
+
+    function initPdfViewer() {
+      // Set up the initial page number
+      updatePage();
+
+      // Attach event listener for the iframe's contentDocument
+      pdfViewer.contentDocument.addEventListener('DOMContentLoaded', function () {
+        pdfViewer.contentDocument.body.addEventListener('keydown', handleKeyPress);
+      });
+    }
+
+    function handleKeyPress(event) {
+      // Handle keyboard navigation (left and right arrow keys)
+      if (event.keyCode === 37) {
+        prevPage();
+      } else if (event.keyCode === 39) {
+        nextPage();
+      }
+    }
+
+    function prevPage() {
+      if (currentPage > 1) {
+        currentPage--;
+        updatePage();
+      }
+    }
+
+    function nextPage() {
+      // Assuming total number of pages is known, replace 10 with the actual number
+      const totalPages = 10;
+      if (currentPage < totalPages) {
+        currentPage++;
+        updatePage();
+      }
+    }
+
+    function updatePage() {
+      pdfViewer.src = `DHAIRYAM.pdf#page=${currentPage}`;
+      document.getElementById('pageNumber').innerText = currentPage;
+    }
+
+    function startClip() {
+      selectionBox = document.getElementById('selectionBox');
+      selectionBox.style.display = 'block';
+
+      // Attach event listeners for mouse events
+      pdfViewer.contentDocument.body.addEventListener('mousedown', handleMouseDown);
+      pdfViewer.contentDocument.body.addEventListener('mousemove', handleMouseMove);
+      pdfViewer.contentDocument.body.addEventListener('mouseup', handleMouseUp);
+    }
+
+    function handleMouseDown(event) {
+      selectionStartX = event.clientX;
+      selectionStartY = event.clientY;
+    }
+
+    function handleMouseMove(event) {
+      if (selectionBox) {
+        const selectionWidth = event.clientX - selectionStartX;
+        const selectionHeight = event.clientY - selectionStartY;
+
+        selectionBox.style.left = selectionStartX + 'px';
+        selectionBox.style.top = selectionStartY + 'px';
+        selectionBox.style.width = selectionWidth + 'px';
+        selectionBox.style.height = selectionHeight + 'px';
+      }
+    }
+
+    function handleMouseUp() {
+      // Detach event listeners for mouse events
+      pdfViewer.contentDocument.body.removeEventListener('mousedown', handleMouseDown);
+      pdfViewer.contentDocument.body.removeEventListener('mousemove', handleMouseMove);
+      pdfViewer.contentDocument.body.removeEventListener('mouseup', handleMouseUp);
+
+      // Now that the user has made a selection, capture the screenshot of the selected area
+      captureClip();
+    }
+
+    function captureClip() {
+      const clipArea = {
+        x: selectionStartX,
+        y: selectionStartY,
+        width: selectionBox.offsetWidth,
+        height: selectionBox.offsetHeight
+      };
+
+      html2canvas(pdfViewer.contentDocument.body, {
+        width: clipArea.width,
+        height: clipArea.height,
+        x: clipArea.x,
+        y: clipArea.y
+      }).then(canvas => {
+        const screenshotUrl = canvas.toDataURL();
+        // For demonstration, log the data URL in the console
+        console.log(screenshotUrl);
+      });
+
+      // Hide the selection box
+      selectionBox.style.display = 'none';
+    }
+  </script>
+</body>
+
+</html>

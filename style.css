@@ -1,0 +1,153 @@
+/* styles.css */
+body {
+    background-color: #fff; /* White background for the body */
+    color: #000; /* Black text color for the body */
+    margin: 0; /* Remove default margin */
+    font-family: 'Arial', sans-serif; /* Set a default font family */
+  }
+  img {
+    max-width: 100%;
+    height: auto;
+    position: relative;
+    height: 7.8rem;
+  }
+  header {
+    background-color: #fff; /* White background */
+    color: #4285f4; /* Full blue text color */
+    padding: 10px;
+    text-align: center;
+    font-size: 1.5em;
+    height: 100px;
+  }
+  
+  iframe {
+    flex: 1;
+    border: none;
+    overflow: auto;
+     /* Set background color to white */
+  }
+  
+  body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color:white;
+    color:black;
+    padding: 10px;
+  }
+
+  nav {
+    display: flex;
+    gap: 20px;
+  }
+
+  nav a {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+  }
+
+  iframe {
+    flex: 1;
+    border: none;
+    overflow: auto;
+    background-color: white;
+    height:600PX;
+  }
+
+  footer {
+    background-color: white;
+    color: black;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  /* Additional style for the moving text */
+/* Additional style for the moving text */
+.moving-text {
+    overflow: hidden;
+    white-space: nowrap;
+    background-color: blue; /* Set background color to blue */
+    color: white; /* Set text color to white */
+  }
+  
+  .moving-text span {
+    display: inline-block;
+    margin-right: 100%; /* Move the span outside the container */
+    animation: marquee 15s linear infinite; /* Adjust animation duration as needed */
+  }
+  
+  @keyframes marquee {
+    from {
+      margin-left: 100%; /* Start the span off-screen to the right */
+    }
+    to {
+      margin-left: -100%; /* Move the span to the left */
+    }
+  }
+
+/* Additional style for the moving text */
+#advertisment {
+    overflow: hidden;
+    white-space: nowrap;
+    background-color: blue; /* Set background color to blue */
+    color: white; /* Set text color to white */
+    padding: 2rem; /* Add padding for better visibility in rem units */
+    font-family: 'Arial', sans-serif; /* Set a nice font family */
+    font-size: 1.5rem; /* Set the font size in rem units */
+    font-weight: 200;
+  }
+  
+  #advertisment span {
+    display: inline-block;
+    margin-right: 100%; /* Move the span outside the container */
+    animation: marquee 15s linear infinite; /* Adjust animation duration as needed */
+  }
+  
+  @keyframes marquee {
+    from {
+      margin-left: 100%; /* Start the span off-screen to the right */
+    }
+    to {
+      margin-left: -100%; /* Move the span to the left */
+    }
+  }
+  
+  nav {
+    display: flex;
+    gap: 20px;
+  }
+  
+  nav a {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 5px; /* Add border-radius for rounded corners */
+    transition: background-color 0.3s, color 0.3s; /* Add smooth transition for color change */
+  }
+  
+  nav a:hover {
+    background-color: #555; /* Change background color on hover */
+    color: #fff; 
+  }
+
+  footer .copyright {
+    background: #525252;
+    color: #fff;
+    text-align: center;
+    margin-top: 1rem;
+    padding: 1rem 0;
+  }
+  
+  
